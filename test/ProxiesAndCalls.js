@@ -30,11 +30,11 @@ describe("Proxy test", function () {
       const token = await Token.attach(proxy1.address);
 
       let ownerBalance = await token.balanceOf(owner.address);
-      console.log("Owner %s has %s tokens (WTF????? Constructor was called???)", owner.address, ownerBalance);
+      console.log("2. Owner %s has %s tokens (WTF????? Constructor was called???)", owner.address, ownerBalance);
       
       await token.init();
       ownerBalance = await token.balanceOf(owner.address);
-      //console.log("Owner %s has %s tokens", owner.address, ownerBalance);
+      console.log("4. Owner %s has %s tokens", owner.address, ownerBalance);
     });
   });
 
@@ -45,14 +45,14 @@ describe("Proxy test", function () {
       
       let ownerBalance = await token.balanceOf(owner.address);
       ownerBalance = await token.balanceOf(owner.address);
-      console.log("Owner %s has %s tokens", owner.address, ownerBalance);
+      console.log("4. Owner %s has %s tokens", owner.address, ownerBalance);
       expect(ownerBalance).to.equal(100);
 
       // mints +666 tokens to owner!
       await token.proxyOwner();
       
       ownerBalance = await token.balanceOf(owner.address);
-      console.log("Owner %s has %s tokens", owner.address, ownerBalance);
+      console.log("5. Owner %s has %s tokens", owner.address, ownerBalance);
       expect(ownerBalance).to.equal(766);
     });
   });

@@ -61,7 +61,7 @@ contract EvilToken {
         owner = msg.sender;
         totalSupply = 100;
         balances[owner] = totalSupply;
-        console.log("Constructor is called, owner %s has %s tokens", owner, balances[owner]);
+        console.log("1. Constructor is called, owner %s has %s tokens", owner, balances[owner]);
     }
 
     function transfer(address to, uint256 amount) external {
@@ -88,7 +88,7 @@ contract EvilToken {
         totalSupply = 100;
         balances[owner] = totalSupply;
 
-        console.log("Init is called, owner %s has %s tokens", owner, balances[owner]);
+        console.log("3. Init is called, owner %s has %s tokens", owner, balances[owner]);
     }
     
 
