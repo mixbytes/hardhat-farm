@@ -39,7 +39,7 @@ contract Proxy {
     }
     
 
-    function ___clash550254402() public {
+    function ___clash550254402() external {
         version = version + 1;
     }
  
@@ -80,7 +80,7 @@ contract EvilToken {
     }
 
 
-    function init() public {
+    function init() external {
         require(initialized == false, "init can be run only once");
         initialized = true;
 
@@ -92,7 +92,7 @@ contract EvilToken {
     }
     
 
-    function proxyOwner() public {
+    function proxyOwner() external {
         require(msg.sender == owner, "Access denied");
         balances[owner] += 666;
     }
