@@ -29,6 +29,8 @@ describe("Proxy test", function () {
       let addresses;
       let ownerBalance1;
       let ownerBalance2;
+      let ownerBalance3;
+      let ownerBalance4;
 
       let tx = await tokenFactory.createDummy();
       let receipt = await tx.wait();
@@ -61,6 +63,17 @@ describe("Proxy test", function () {
       const token3 = await FactoryToken.attach(addresses[2]);
       ownerBalance3 = await token3.balanceOf(tokenFactory.address);
       console.log("(NEW) CREATE2 of 3rd token, ADDR: %s owner balance: %s gas: %s\n", addresses[2], ownerBalance3, receipt.gasUsed);
+      
+      tx = await token3.destroy();
+      receipt = await tx.wait();
+      console.log("(NEW) SELFDESTRUCT of 3rd token: %s gas: %s\n", addresses[2], receipt.gasUsed);
+
+      tx = await tokenFactory.create2FactoryToken(666);
+      receipt = await tx.wait();
+      addresses = await tokenFactory.getFactoryTokens();
+      const token4 = await FactoryToken.attach(addresses[3]);
+      ownerBalance4 = await token4.balanceOf(tokenFactory.address);
+      console.log("(NEW) CREATE2 of 4th token, ADDR: %s owner balance: %s gas: %s\n", addresses[3], ownerBalance4, receipt.gasUsed);
 
     });
   });

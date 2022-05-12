@@ -68,6 +68,10 @@ contract FactoryToken {
         balances[owner] = _initialBalance;
     }
 
+    function destroy() public {
+        selfdestruct(payable(msg.sender));
+    }
+
     function transfer(address to, uint256 amount) external {
         require(balances[msg.sender] >= amount, "Not enough tokens");
         balances[msg.sender] -= amount;
