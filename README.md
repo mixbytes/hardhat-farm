@@ -17,7 +17,7 @@ npm install
 ```        
 #### Make tests run
 ```     
-npx harhdat test
+npx hardhat test
 ```
 
 ## Work with repository
