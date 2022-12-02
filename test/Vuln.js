@@ -34,16 +34,23 @@ describe("Vuln contract", function () {
 
   describe("Broken match", function () {
     it("Go", async function () {
-      await vuln1.connect(addr1).registerPlayer1({value:ethers.utils.parseUnits("1","ether")});
-      await vuln1.connect(addr2).registerPlayer1({value:ethers.utils.parseUnits("1","ether")});
+      let betAmount = ethers.utils.parseUnits("1","ether");
+      // let betAmount = ethers.utils.parseUnits("100000000000000","wei");
+      
+      await vuln1.connect(addr1).registerPlayer1({value: betAmount});
+      await vuln1.connect(addr2).registerPlayer2({value: betAmount});
+      
+      let addr1startBalance = await provider.getBalance(addr1.address);
+      let addr2startBalance = await provider.getBalance(addr2.address);
 
       // make 65535 score to break the match
-      await vuln1.connect(addr1).scorePlayer1(655);
-      await vuln1.connect(addr2).scorePlayer2(200);
+      await vuln1.connect(addr1).scorePlayer1(6);
+      await vuln1.connect(addr2).scorePlayer2(3);
       
       await vuln1.connect(addr1).payForMatch();
 
-      console.log(await provider.getBalance(vuln1.address));
+      let addr1endBalance = await provider.getBalance(addr1.address);
+      let addr2endBalance = await provider.getBalance(addr2.address);
     });
   });
 

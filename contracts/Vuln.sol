@@ -1,27 +1,44 @@
 pragma solidity >=0.8.0 <0.9.0;
 
+import "hardhat/console.sol";
+
 contract Vuln1 {
     uint16[2] public scores;
     address public player1;
     address public player2;
+    uint256 bet;
     
     function payForMatch() external {
         require(scores[0] > 0, "first player should commit");
         require(scores[1] > 0, "second player should commit");
-        uint256 player1pay = scores[0] / (scores[0] + scores[1]) * address(this).balance;
-        uint256 player2pay = scores[1] / (scores[0] + scores[1]) * address(this).balance;
+        
+        console.log("Total contract balance: %s", address(this).balance);
+        
+        // NOT WORKING
+        // uint256 player1pay = scores[0] / (scores[0] + scores[1]) * address(this).balance;
+        // uint256 player2pay = scores[1] / (scores[0] + scores[1]) * address(this).balance;
+
+        // WORKING
+        uint256 player1pay = scores[0] * address(this).balance / (scores[0] + scores[1]);
+        uint256 player2pay = address(this).balance * scores[1] / (scores[0] + scores[1]);
+        
+        console.log("scores0: %s of %s, player1pay: %s", scores[0], scores[0] + scores[1], player1pay);
+        console.log("scores1: %s of %s, player2pay: %s", scores[1], scores[0] + scores[1], player2pay);
+        
         payable(player1).transfer(player1pay);
         payable(player2).transfer(player2pay);
+        
         selfdestruct(payable(msg.sender));
     }
 
     function registerPlayer1() external payable {
-        require(msg.value == 1 ether, "must make a bet");
+        require(msg.value > 0, "must make a bet");
+        bet = msg.value;
         player1 = msg.sender;
     }
     
     function registerPlayer2() external payable {
-        require(msg.value == 1 ether, "must make a bet");
+        require(msg.value == bet, "must make a bet equal to player1");
         player2 = msg.sender;
     }
     
