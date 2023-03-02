@@ -1,5 +1,5 @@
 # hardhat-farm
-Simple educational boilerplate for hardhat                                                                                                             
+Educational repo for demonstration of some DeFi security-related mehcanics, used in MixBytes Farm educational Course
 
 # Installation        
 Solve installation problems by yourself using hardhat documentation. Here is the easiest way
@@ -19,7 +19,7 @@ npm install
 ```     
 npx harhdat test
 ```
-
-## Work with repository
-
-We will test different patterns by adding and modifying contracts in ```contracts/``` dir, testing them with tests in ```test/``` dir.
+#### Make one separate test run example
+```     
+npx hardhat test test/Metamorph.js
+```
