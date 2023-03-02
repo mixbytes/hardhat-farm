@@ -28,7 +28,7 @@ describe("Mutable contract", function () {
         console.log("    - created MetaDeployer contract at %s", metaDeployer.address);
 
         console.log("STEP 1. MetaDeployer deploys MutDeployer with CREATE2");
-        const deployedMutAddr = ((await (await metaDeployer.go()).wait()).events)[0].args[0];
+        const deployedMutAddr = ((await (await metaDeployer.createMutDeployer()).wait()).events)[0].args[0];
         console.log("    - MetaDeployer created2 the new MutDeployer contract at %s", deployedMutAddr);
 
         console.log("STEP 2. MutDeployer deploys MutableV1 with CREATE");
@@ -49,7 +49,7 @@ describe("Mutable contract", function () {
         console.log("    - MutDeployer at %s is selfdestructed", deployedMutAddr);
         
         console.log("STEP 5. MetaDeployer deploys MutDeployer with CREATE2 second time after destruction");
-        const deployedMutAddrSecond = ((await (await metaDeployer.go()).wait()).events)[0].args[0];
+        const deployedMutAddrSecond = ((await (await metaDeployer.createMutDeployer()).wait()).events)[0].args[0];
         console.log("    - MetaDeployer created2 the same MutDeployer contract at %s", deployedMutAddrSecond);
 
         console.log("STEP 6. MutDeployer deploys MutableV2 (on the same address, where MutableV1 was)");
